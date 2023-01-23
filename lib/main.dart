@@ -26,8 +26,9 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   late String email = "";
   late String password = "";
-  late String errormsg;
+  late String errormsg = "";
   late bool error = false;
+  late String idadmin = "";
   /*  late String email;r
   late String password; */
 
@@ -37,7 +38,7 @@ class _MainScreenState extends State<MainScreen> {
     print("Email: $email");
     print("Password: $password");
 
-    String apiUrl = "http://192.168.137.191//backend/test/api/auth.php";
+    String apiUrl = "http://192.168.137.191/backend/test/api/auth.php";
 
     var reponse = await http
         .post(Uri.parse(apiUrl), body: {'email': email, 'password': password});
@@ -50,7 +51,13 @@ class _MainScreenState extends State<MainScreen> {
           errormsg = jsonData['data'];
         });
       } else {
-      Get.offAll(() => const HomePage(), transition: Transition.leftToRight, duration: const Duration(milliseconds: 500));
+        setState(() {
+           idadmin = jsonData['data'];
+        });
+        print("Id admin:  $idadmin");
+        Get.offAll(() => HomePage(idadmin: idadmin),
+            transition: Transition.leftToRight,
+            duration: const Duration(milliseconds: 500));
       }
 
       print("Response body: $jsonData");
@@ -82,7 +89,7 @@ class _MainScreenState extends State<MainScreen> {
                     color: Colors.black,
                     fontWeight: FontWeight.bold),
               ),
-             const SizedBox(
+              const SizedBox(
                 height: 100,
               ),
               Container(

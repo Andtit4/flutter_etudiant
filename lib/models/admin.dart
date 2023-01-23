@@ -1,5 +1,5 @@
 class AdminModel {
-  late String id_admin;
+  late int id_admin;
   late String email;
   late String nom;
   late String prenom;

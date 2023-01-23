@@ -75,12 +75,15 @@ class _HomePageState extends State<HomePage> {
  */
 
 import 'dart:async';
+import 'dart:convert';
 import 'dart:math';
 
 // import 'package:example/utils/color_extensions.dart';
+import 'package:cine/models/admin.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   late String idadmin;
@@ -102,10 +105,23 @@ class HomePage extends StatefulWidget {
 class HomePageState extends State<HomePage> {
   final Color barBackgroundColor = const Color(0xff72d8bf);
   final Duration animDuration = const Duration(milliseconds: 250);
+  late List<AdminModel> adminModel = [];
 
-  getAdmins() {
-    print("Id admin : ${widget.idadmin}");
-    
+  getAdmins() async {
+    print(" bhbh Id admin : ${widget.idadmin}");
+    String apiUrl =
+        "http://192.168.137.191/backend/test/api/getAdmin.php?email=${widget.idadmin}";
+
+    var response = await http.get(Uri.parse(apiUrl));
+    if (response.statusCode == 200) {
+      var jsonData = json.decode(response.body);
+
+      adminModel = (jsonData as List<dynamic>)
+          .map((json) => AdminModel.fromJson(json))
+          .toList();
+    }
+    print('Error : ${response.statusCode}');
+    return adminModel;
   }
 
   @override
@@ -272,14 +288,26 @@ class HomePageState extends State<HomePage> {
                         const SizedBox(
                           height: 4,
                         ),
-                        Text(
+                        Row(
+                          children: adminModel
+                              .map((e) => Text(
+                                    '${e.nom}  ${e.prenom}😎',
+                                    style: GoogleFonts.poppins(
+                                      color: Color(0xff379982),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ))
+                              .toList(),
+                        ),
+                        /* Text(
                           'John Doe😎 ',
                           style: GoogleFonts.poppins(
                             color: Color(0xff379982),
                             fontSize: 18,
                             fontWeight: FontWeight.bold,
                           ),
-                        ),
+                        ), */
                         const SizedBox(
                           height: 38,
                         ),

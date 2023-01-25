@@ -85,6 +85,10 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
+void main() {
+  runApp(MaterialApp());
+}
+
 class HomePage extends StatefulWidget {
   late String idadmin;
   HomePage({super.key, required this.idadmin});
@@ -108,9 +112,8 @@ class HomePageState extends State<HomePage> {
   late List<AdminModel> adminModel = [];
 
   getAdmins() async {
-    print(" bhbh Id admin : ${widget.idadmin}");
     String apiUrl =
-        "http://192.168.137.191/backend/test/api/getAdmin.php?email=${widget.idadmin}";
+        "http://192.168.3.12/backend/test/api/getAdmin.php?email=${widget.idadmin}";
 
     var response = await http.get(Uri.parse(apiUrl));
     if (response.statusCode == 200) {
@@ -120,13 +123,11 @@ class HomePageState extends State<HomePage> {
           .map((json) => AdminModel.fromJson(json))
           .toList();
     }
-    print('Error : ${response.statusCode}');
     return adminModel;
   }
 
   @override
   void initState() {
-    // TODO: implement initState
     getAdmins();
     super.initState();
   }
@@ -138,21 +139,81 @@ class HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        title: Text('ghg'),
+      ),
+      drawer: Drawer(
+        // width: 200
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+            const DrawerHeader(
+              decoration: BoxDecoration(
+                color: Color(0xff81e5cd),
+              ),
+              child: Text('Drawer Header'),
+            ),
+            ListTile(
+              title: const Text('Item 1'),
+              onTap: () {},
+            ),
+            ListTile(
+              title: const Text('Item 2'),
+              onTap: () {
+                // Update the state of the app.
+                // ...
+              },
+            ),
+          ],
+        ),
+      ),
       body: Column(
         children: [
           SizedBox(
             height: 50,
           ),
-          Row(
+          /* Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(
-                width: 70,
-                height: 60,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(25)),
-                child: Icon(Icons.menu),
+              GestureDetector(
+                onTap: () {
+                  print("object");
+
+                  Drawer(
+                    width: 200,
+                    child: ListView(
+                      padding: EdgeInsets.zero,
+                      children: [
+                        const DrawerHeader(
+                          decoration: BoxDecoration(
+                            color: Colors.blue,
+                          ),
+                          child: Text('Drawer Header'),
+                        ),
+                        ListTile(
+                          title: const Text('Item 1'),
+                          onTap: () {},
+                        ),
+                        ListTile(
+                          title: const Text('Item 2'),
+                          onTap: () {
+                            // Update the state of the app.
+                            // ...
+                          },
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                child: Container(
+                  width: 70,
+                  height: 60,
+                  decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(25)),
+                  child: Icon(Icons.menu),
+                ),
               ),
               Text(
                 '312',
@@ -168,7 +229,7 @@ class HomePageState extends State<HomePage> {
                 child: Icon(Icons.notifications),
               ),
             ],
-          ),
+          ), */
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(

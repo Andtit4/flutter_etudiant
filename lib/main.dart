@@ -38,7 +38,7 @@ class _MainScreenState extends State<MainScreen> {
     print("Email: $email");
     print("Password: $password");
 
-    String apiUrl = "http://192.168.3.12/backend/test/api/auth.php";
+    String apiUrl = "http://192.168.100.44/backend/test/api/auth.php";
 
     var reponse = await http
         .post(Uri.parse(apiUrl), body: {'email': email, 'password': password});

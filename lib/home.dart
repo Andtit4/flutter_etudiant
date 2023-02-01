@@ -113,7 +113,7 @@ class HomePageState extends State<HomePage> {
 
   getAdmins() async {
     String apiUrl =
-        "http://192.168.3.12/backend/test/api/getAdmin.php?email=${widget.idadmin}";
+        "http://192.168.100.44/backend/test/api/getAdmin.php?email=${widget.idadmin}";
 
     var response = await http.get(Uri.parse(apiUrl));
     if (response.statusCode == 200) {
@@ -141,7 +141,23 @@ class HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
-        title: Text('ghg'),
+        elevation: 0,
+        actions: <Widget>[
+          GestureDetector(
+            onTap: (){
+              
+            },
+            child: Icon(
+              Icons.notification_add,
+              color: Colors.grey,
+              size: 34,
+            ),
+          )
+        ],
+        title: Text(
+          'ghg',
+          style: GoogleFonts.poppins(color: Colors.black),
+        ),
       ),
       drawer: Drawer(
         // width: 200

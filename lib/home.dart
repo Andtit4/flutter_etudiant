@@ -80,8 +80,10 @@ import 'dart:math';
 
 // import 'package:example/utils/color_extensions.dart';
 import 'package:cine/models/admin.dart';
+import 'package:cine/notifications.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
@@ -144,8 +146,12 @@ class HomePageState extends State<HomePage> {
         elevation: 0,
         actions: <Widget>[
           GestureDetector(
-            onTap: (){
-              
+            onTap: () {
+             /*  Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => NotificationPage())); */
+              Get.off(() => NotificationPage(),
+                  transition: Transition.leftToRight,
+                  duration: Duration(milliseconds: 500));
             },
             child: Icon(
               Icons.notification_add,

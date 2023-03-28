@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 
+import 'package:cine/bottombar.dart';
 import 'package:cine/home.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -28,7 +29,7 @@ class _MainScreenState extends State<MainScreen> {
   late String password = "";
   late String errormsg = "";
   late bool error = false;
-  late String idadmin = "";
+  late int idadmin = 0;
   /*  late String email;r
   late String password; */
 
@@ -38,29 +39,31 @@ class _MainScreenState extends State<MainScreen> {
     print("Email: $email");
     print("Password: $password");
 
-    String apiUrl = "http://192.168.100.44/backend/test/api/auth.php";
+    String apiUrl =
+        "http://192.168.3.18:3000/api/user/auth?email=${email}&pass=$password";
 
-    var reponse = await http
-        .post(Uri.parse(apiUrl), body: {'email': email, 'password': password});
+    var reponse = await http.get(Uri.parse(apiUrl));
 
     if (reponse.statusCode == 200) {
       var jsonData = json.decode(reponse.body);
-      if (jsonData['error'] == true) {
+      if (jsonData[0]['error'] == true) {
         setState(() {
           error = true;
-          errormsg = jsonData['data'];
+          errormsg = jsonData[0]['id_admin'];
         });
       } else {
         setState(() {
-           idadmin = jsonData['data'];
+          idadmin = jsonData[0]['id_admin'];
         });
         print("Id admin:  $idadmin");
-        Get.offAll(() => HomePage(idadmin: idadmin),
+        Get.offAll(() => BottomBar(idadmin: idadmin),
             transition: Transition.leftToRight,
             duration: const Duration(milliseconds: 500));
       }
 
       print("Response body: $jsonData");
+    } else {
+      print("___error__${reponse.statusCode}");
     }
   }
 

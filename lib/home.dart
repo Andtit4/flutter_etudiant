@@ -92,7 +92,7 @@ void main() {
 }
 
 class HomePage extends StatefulWidget {
-  late String idadmin;
+  late int idadmin;
   HomePage({super.key, required this.idadmin});
 
   List<Color> get availableColors => const <Color>[
@@ -147,7 +147,7 @@ class HomePageState extends State<HomePage> {
         actions: <Widget>[
           GestureDetector(
             onTap: () {
-             /*  Navigator.of(context).push(
+              /*  Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => NotificationPage())); */
               Get.off(() => NotificationPage(),
                   transition: Transition.leftToRight,

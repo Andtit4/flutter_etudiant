@@ -55,10 +55,10 @@ class _BottomBarState extends State<BottomBar> {
                 label: 'Home'),
             BottomNavigationBarItem(
                 icon: Icon(
-                  Icons.person,
+                  Icons.settings,
                   color: Colors.black,
                 ),
-                label: 'Home'),
+                label: 'Paramêtre'),
             BottomNavigationBarItem(
                 icon: Icon(
                   Icons.home,
